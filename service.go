@@ -12,14 +12,14 @@ type Service struct {
 
 // Create func creates a transaction
 func (svc *Service) Create(amount int) (*Transaction, error) {
-	transaction := Transaction{
+	transaction := &Transaction{
 		SubmissionTime: time.Now(),
 		Amount:         amount,
 	}
-	err := svc.datastore.Create(transaction)
+	err := svc.datastore.Create(*transaction)
 	if err != nil {
 		fmt.Println(`error occured while creating in DB:`, err)
 		return nil, err
 	}
-	return &transaction, nil
+	return transaction, nil
 }
